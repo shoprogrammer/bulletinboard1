@@ -1,0 +1,96 @@
+{% extends "bulletin/base.html" %}
+
+
+{% block title %}commentのreactionです{% endblock %}
+
+
+
+{% block content %}
+
+
+        <section>
+            <h1>{{board.title}}の詳細画面</h1>
+
+        <table class="table">
+            <thead>
+            <th scope="col">作成者</th>
+            <th scope="col">投稿内容</th>
+            <th scope="col">作成日時</th>
+            <th scope="col">更新日時</th>
+
+
+
+
+              
+                
+            </thead>
+
+
+
+        <tbody>
+            <p>
+            <th scope="col">{{comment.user.username}}さん</th>
+            <th scope="col">{{comment}}</th>
+            <th scope="col">{{comment.created_at}}</th>
+            <th scope="col">{{comment.updated_at}}</th>
+
+
+
+            </p>
+        </tbody>   
+        </table>
+
+
+        <hr>
+        </section>
+
+        <section class="mt-3">
+        <h3>コメント追加</h3>
+            <form action="{% url 'reaction-create' board.id comment.id %}" method="post">
+                {% csrf_token %}
+                <div class="form-group mb-3">
+                    <textarea name="content" id="id_content" class="form-control"></textarea>
+                </div>
+                <button type="submit" class="btn btn-info">リアクションする</button>
+
+
+        </form>
+        </section>
+
+
+<h2>リアクション一覧</h2>
+<ul class="list-unstyled">
+{% for reaction in reactions %}
+
+        <li class="mb-3">
+            <div class="card">
+                <div class="card-header bg-light">
+                    <strong>{{reaction.user}}</strong>さん-{{reaction.created_at|date:"m/d H:i-Y"}}
+                </div>
+
+                    <div class="card-body">
+                         <p class="card-text">{{ reaction.content }}</p>
+                
+            </div>
+            <div class="card-footer">
+                {% if reaction.user == request.user %}
+                <form action="{% url 'reaction-delete' board.pk comment.pk reaction.pk %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">削除する</button>
+                </form>
+                {% endif %}
+
+
+            </div>
+            </div>
+        </li>
+{% empty %}
+
+<li>コメントはまだありません</li>
+
+{% endfor %}
+</ul>
+
+
+
+{% endblock %}

@@ -1,0 +1,76 @@
+<!-- bootstrapのnavbar -->
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="{% url 'board-list' %}">掲示板</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{% url 'board-new' %}">Create</a>
+          </li>
+          
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              {% if user.is_authenticated %}
+              {{ user.username }}
+
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#">
+                <!-- ログアウト -->
+                 <form action={% url 'logout' %} method="post">
+                  {% csrf_token %}
+                  <button type="submit">ログアウト</button>
+                 </form>
+
+
+
+              </a></li>
+              
+            </ul>
+          </li>
+        </ul>
+              {% else %}
+              ゲスト
+
+
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#">
+                <a href="{% url 'login' %}">ログイン</a>
+              </a></li>
+              <li><a class="dropdown-item" href="#">
+                <a href="{% url 'signup' %}">サインアップ</a>
+              </a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="#">Something else here</a></li>
+            </ul>
+          </li>
+        </ul>
+              {% endif %}
+
+
+
+
+
+            
+          
+       
+        <form method="GET" action="{% url 'search' %}" class="d-flex" role="search">
+          <input class="form-control me-2" type="search" name = "query" id="id_query" placeholder="Search" aria-label="Search">
+          <div class="col-md-4">
+
+          <select name="search_type" class="form-select">
+            <option value="partial">部分一致</option>
+            <option value="prefix">前方一致</option>
+            <option value="suffix">後方一致</option>
+          </select>
+          </div>
+
+          <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+      </div>
+    </div>
+  </nav>

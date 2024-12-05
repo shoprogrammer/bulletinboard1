@@ -1,0 +1,56 @@
+{% extends './base.html' %}
+{% block title %}自分の投稿一覧です{% endblock %}
+{% block content %}
+    <section>
+   
+
+            <table class="table">
+                <colgroup>
+                    <col style="width:10%">
+                    <col style="width:40%">
+                    <col style="width:10%">
+                    <col style="width:15%">
+                    <col style="width:15%">
+
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th scope="col">掲示板ID</th>
+                        <th scope="col">タイトル</th>
+                        <th scope="col">場所</th>
+                        <th scope="col">投稿日時</th>
+                        <th scope="col">更新日時</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for board in boards %}
+                    <tr>
+                        <th scope="col">{{board.id}}</th>
+                        <th scope="col"><a href={% url "board-detail" board.pk %}>{{board.title}}</th></a>
+                        <th scope="col">{{board.place}}</th>
+                        <th scope="col">{{board.created_at}}</th>
+                        <th scope="col">{{board.updated_at}}</th>
+                    </tr>
+                      {% endfor %}
+
+
+
+                
+                    
+                    
+                   
+                    
+                    
+             
+
+                </tbody>
+            </table> 
+
+            
+
+    </section>
+    <a href="{% url 'board-list' %}" class="btn btn-info">みんなの投稿一覧</a>
+
+{% endblock %}
+
+

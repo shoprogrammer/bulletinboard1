@@ -1,0 +1,9 @@
+{% if sort_field == field %}
+    {% if direction == 'asc' %}
+    <i class="bi bi-caret-down-square-fill"></i>
+    {% else %}
+    <i class="bi bi-caret-up-square-fill"></i>
+    {% endif %}
+{% else %}
+<i class="bi bi-caret-left-fill"></i>
+{% endif %}

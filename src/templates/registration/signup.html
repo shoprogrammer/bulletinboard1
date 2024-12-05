@@ -1,0 +1,51 @@
+{% extends 'bulletin/base.html' %}
+{% block title %}ユーザー登録画面{% endblock %}
+{% block content %}
+
+
+    <section class="container">
+        <div class="row justify-content-center">
+            <h2>ユーザー登録画面</h2>
+            <div class="col-md-6">
+            <form  method="post">
+                {% csrf_token %}
+                        <div class="mb-3 row">
+                            <label for="id_username" class="col-sm-4 col-form-label">ユーザー名</label>
+                            <div class="col-sm-8">
+                            {{ form.username }} </div>
+                            <br> </div>
+                        <div class="mb-3 row">
+                            <label for="id_email" class="col-sm-4 col-form-label">メールアドレス</label>
+                            <div class="col-sm-8">
+                            {{ form.email }}</div>
+                            <br> </div>
+                        
+                        <div class="mb-3 row">
+                            <label for="id_password1" class="col-sm-4 col-form-label">パスワード</label>
+                            <div class="col-sm-8">
+                            {{ form.password1 }}</div>
+                            <br> </div>
+
+                        <div class="mb-3 row">
+                            <label for="id_password2" class="col-sm-4 col-form-label">パスワード（確認用）</label>
+                            <div class="col-sm-8">
+                            {{ form.password2 }}</div>
+                            <br> </div>
+
+
+                        <div class="mb-3 row"> 
+                            <div class="col-sm-8 offset-sm-4">
+                <button type="submit" class="btn btn-info" >登録</button>
+                        </div></div></div>
+            </form>
+        </div>
+
+    </section>
+
+
+
+
+
+{% endblock %}
+
+

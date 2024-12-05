@@ -1,0 +1,139 @@
+{% extends './base.html' %}
+{% block title %}一覧です{% endblock %}
+{% block content %}
+
+    <section>
+
+
+            
+
+
+            <table class="table">
+                <colgroup>
+                    <col style="width:10%">
+                    <col style="width:40%">
+                    <col style="width:10%">
+                    <col style="width:10%">
+                    <col style="width:15%">
+                    <col style="width:15%">
+
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th scope="col">
+                            掲示板ID
+                            <a href="{% url 'sort' %}?sort=id&direction={{ next_direction|default:'asc' }}">                              
+                                {% include './direction.html' with sort_field='id' field=sort_by direction=direction %}
+                        </a>
+                        </th>
+
+                        <th scope="col">タイトル
+                            <a href="{% url 'sort' %}?sort=title&direction={{ next_direction|default:'asc' }}">                               
+                                {% include './direction.html' with sort_field='title' field=sort_by direction=direction %}
+                        </a>
+                        </th>
+                        <th scope="col">
+                            お気に入り
+                        </th>
+                        <th scope="col">場所
+                            <a href="{% url 'sort' %}?sort=place&direction={{ next_direction|default:'asc' }}">                               
+                                {% include './direction.html' with sort_field='place' field=sort_by direction=direction %}
+                        </a>
+                        </th>
+                      
+
+                        <th scope="col">投稿日時
+                            <a href="{% url 'sort' %}?sort=created_at&direction={{ next_direction|default:'asc' }}">                               
+                                {% include './direction.html' with sort_field='created_at' field=sort_by direction=direction %}
+                        </a>
+                        </th>
+
+                        <th scope="col">更新日時
+                            <a href="{% url 'sort' %}?sort=updated_at&direction={{ next_direction|default:'asc' }}">                               
+                                {% include './direction.html' with sort_field='updated_at' field=sort_by direction=direction %}
+                        </a>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for board in boards %}
+                    <tr>
+                        <th scope="col">{{board.id}}</th>
+                        <th scope="col"><a href={% url "board-detail" board.pk %}>{{board.title}}</th></a>
+                        <th>
+                            {% if user.is_authenticated %}
+                                {% if board.is_favorite %}
+                                <form action="{% url 'remove_favorite' %}" method="post">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="board" value="{{board.id}}">
+                                    <button type="submit" class="btn btn-info"><i class="bi bi-clipboard-heart-fill"></i></button>
+
+                                </form>
+                                {% else %}
+                                    <form action="{% url 'add_favorite' %}" method="post">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="board" value="{{board.id}}">
+                                        <button type="submit" class="btn btn-outline-info"><i class="bi bi-clipboard-heart-fill"></i></button>
+
+                                    </form>
+                                    {% endif %}
+                                    {% endif %}
+
+
+                        </th>
+                        <th scope="col">{{board.place}}</th>
+                        <th scope="col">{{board.created_at}}</th>
+                        <th scope="col">{{board.updated_at}}</th>
+                    </tr>
+                      {% endfor %}
+
+
+
+                
+                    
+                    
+                   
+                    
+                    
+             
+
+                </tbody>
+            </table> 
+
+            
+
+    </section>
+
+
+    <a href="{% url 'my_boards' %}" class="btn btn-info">自分の投稿一覧</a>
+    <a href="{% url 'display_favorite' %}" class="btn btn-info">お気に入り一覧</a>
+
+    <!-- ページネーションのリンク表示 -->
+     <section class="pagination justify-content-center">
+        <ul class="pagination">
+    {% if boards.has_previous %}
+        <li class="page-item">
+        <a class="page-link" href="?page=1">&laquo;最初</a>
+        </li>
+        <li class="page-item">
+        <a class="page-link" href="?page={{ boards.previous_page_number }}">前へ</a>
+        </li>
+    {% endif %}
+    <li class="page-item disabled">
+    <a class="page-link" href="#">ページ {{ boards.number }} // {{boards.paginator.num_pages }}</a>
+    </li>
+    {% if boards.has_next %}
+        <li class="page-item">
+        <a class="page-link" href="?page={{ boards.next_page_number }}">次へ</a>
+        </li>
+        <li class="page-item">
+        <a class="page-link" href="?page={{ boards.paginator.num_pages }}">最後 &raquo;</a>
+        </li>
+    {% endif %}
+        </ul>
+</section>
+
+
+{% endblock %}
+
+

@@ -1,0 +1,23 @@
+{% extends 'bulletin/base.html' %}
+{% block title %}プロフィール画面{% endblock %}
+{% block content %}
+
+
+    <section class="container">
+        <div class="row justify-content-center">
+            <h2>プロフィール画面</h2>
+            <div class="col-md-6">
+            <p>ユーザー名: {{user.username}}</p>
+            <p>E-メール:   {{user.email}}</p>
+
+        </div>
+        <a href="{% url 'board-list' %}" >一覧へ</a>
+    </section>
+
+
+
+
+
+{% endblock %}
+
+
